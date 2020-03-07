@@ -29,6 +29,18 @@ body, .app {
   flex: 1;
 }
 
+.home {
+  text-align: center;
+}
+
+.bigText {
+  margin-top:50px;
+  margin-bottom:50px;
+  font-size: 72px;
+  color: red;
+  text-align: center;
+}
+
 .errorMessage {
   padding-left:25px;
   font-size: 25px;

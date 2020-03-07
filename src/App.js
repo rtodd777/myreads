@@ -5,18 +5,19 @@
 // Date Written... 2/26/2020
 // -------------------------------------------------------------------
 import React, {Component} from 'react'
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import * as BooksAPI from './FileIO/BooksAPI'
 import './App.css'
 import BookListing from './Components/BookListing'
 import SearchBooks from './Components/SearchBooks'
+import Error404 from './Components/Error404'
 
 class BooksApp extends Component {
 
 /* Define the State Variables                                       */
 /* ---------------------------------------------------------------- */
   state = {
-    BookInventory: []
+    bookInventory: []
   }
 
 
@@ -31,7 +32,7 @@ class BooksApp extends Component {
 /* ---------------------------------------------------------------- */
   get_all_books = () => {
     BooksAPI.getAll().then((bookInventory) => {
-      this.setState({BookInventory: bookInventory})
+      this.setState({bookInventory: bookInventory})
     })
   }
 
@@ -41,8 +42,7 @@ class BooksApp extends Component {
   changeShelf = (book, newShelf) =>{
    BooksAPI.update(book, newShelf).then(()=>{
      BooksAPI.getAll().then((books) =>{
-      this.setState({books: books})
-      window.location.href = "/";
+      this.setState({bookInventory: books})
     })
    })
   }
@@ -55,15 +55,23 @@ class BooksApp extends Component {
     return (
       <div className="app">
 
+        <Switch>
+
 {/* Base Page Route */}
         <Route exact path="/" render={() => (
-          <BookListing bookInventory={this.state.BookInventory} changeShelf={this.changeShelf} />
+          <BookListing bookInventory={this.state.bookInventory} changeShelf={this.changeShelf} />
         )}/>
 
 {/* Search Page Route */}
         <Route exact path="/search" render={() => (
-          <SearchBooks bookInventory={this.state.BookInventory} changeShelf={this.changeShelf} />
+          <SearchBooks bookInventory={this.state.bookInventory} changeShelf={this.changeShelf} />
         )}/>
+
+{/* Bad URL */}
+        <Route component={Error404} />
+
+      </Switch>
+
 
       </div>
     )
