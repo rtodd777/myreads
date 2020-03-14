@@ -52,10 +52,13 @@ class BooksApp extends Component {
 /* Main Section to Render                                           */
 /* ---------------------------------------------------------------- */
   render() {
+
     return (
+
       <div className="app">
 
         <Switch>
+
 
 {/* Base Page Route */}
         <Route exact path="/" render={() => (
