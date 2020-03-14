@@ -18,6 +18,7 @@ class BookShelf extends Component {
     changeShelf: PropTypes.func.isRequired
   }
 
+
 /* ---------------------------------------------------------------- */
 /* Main Section to Render                                           */
 /* ---------------------------------------------------------------- */

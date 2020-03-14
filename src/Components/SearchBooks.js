@@ -12,6 +12,7 @@ import * as BooksAPI from '../FileIO/BooksAPI';
 
 class SearchBooks extends Component {
 
+
 /* Define the State Variables                                       */
 /* ---------------------------------------------------------------- */
   static propTypes = {
@@ -25,6 +26,25 @@ class SearchBooks extends Component {
     errorMessage: ''
   }
 
+
+/* Update Book Inventory with the Merged List of Shelves            */
+/* ---------------------------------------------------------------- */
+  mergeShelfInfo(books) {
+    const mergedBooks = books.map(book => {
+      book.shelf = "none";
+      this.props.bookInventory.forEach(bookInventory => {
+        if (book.id === bookInventory.id) {
+          book.shelf = bookInventory.shelf;
+        }
+      });
+      return book;
+    });
+    this.setState({
+      books: mergedBooks
+    });
+  }
+
+
 /* Search Books API                                                 */
 /* ---------------------------------------------------------------- */
   searchBooks = event => {
@@ -33,6 +53,9 @@ class SearchBooks extends Component {
 
     if (query) {
       BooksAPI.search(query.trim(), 20).then(books => {
+
+        this.mergeShelfInfo(books)
+
         if (books.length > 0) {
           this.setState({ 
             bookResults: books, 
