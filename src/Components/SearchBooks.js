@@ -54,9 +54,10 @@ class SearchBooks extends Component {
     if (query) {
       BooksAPI.search(query.trim(), 20).then(books => {
 
-        this.mergeShelfInfo(books)
+//        this.mergeShelfInfo(books)
 
         if (books.length > 0) {
+          this.mergeShelfInfo(books)
           this.setState({ 
             bookResults: books, 
             errorMessage: '',
